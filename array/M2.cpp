@@ -1,50 +1,47 @@
-// #sort color
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // for print helper if needed
 
 using namespace std;
 
 class Solution {
 public:
-    vector<int> sortColors(vector<int>& nums) {
-        int n = nums.size();
-
-        for (int i = 0; i < n - 1; i++) {
-            bool isswap = false;
-
-            for (int j = 0; j < n - i - 1; j++) 
-            {
-                if (nums[j] > nums[j + 1]) {
-                    swap(nums[j], nums[j + 1]);
-                    isswap = true;
-                }
+    void sortColors(vector<int>& nums) {
+        int low = 0, mid = 0, high = nums.size() - 1;
+        
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                swap(nums[low], nums[mid]);
+                low++;
+                mid++;
+            } 
+            else if (nums[mid] == 1) {
+                mid++;
+            } 
+            else { // nums[mid] == 2
+                swap(nums[mid], nums[high]);
+                high--;
             }
-
-            if (!isswap) return nums;
         }
-
-        return nums;
     }
 };
 
 int main() {
-    Solution solution;
+    // 1. Create a test vector
     vector<int> nums = {2, 0, 2, 1, 1, 0};
-
-    cout << "Original array: ";
-    for (int num : nums) {
-        cout << num << " ";
+    
+    // 2. Instantiate the Solution class
+    Solution sol;
+    
+    // 3. Call the function (modifies vector in-place)
+    sol.sortColors(nums);
+    
+    // 4. Print the result to the VS Code terminal
+    cout << "Sorted Colors: [ ";
+    for (int x : nums) {
+        cout << x << " ";
     }
-    cout << endl;
-
-    solution.sortColors(nums);
-
-    cout << "Sorted array:   ";
-    for (int num : nums) {
-        cout << num << " ";
-    }
-    cout << endl;
-
+    cout << "]" << endl;
+    
     return 0;
 }
